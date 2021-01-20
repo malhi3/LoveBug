@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/fbd6d360bf.js" crossorigin="anonymous"></script>
+
+    <style media="screen">
+      body {
+        font-family: 'Cormorant Garamond', serif;;
+      }
+
+      #container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: url('https://static.vecteezy.com/system/resources/previews/000/834/435/non_2x/beautiful-space-background-vector.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+
+      #options-container {
+        position: fixed;
+        left: 0;
+        top: 50px;
+        height: 0%;
+        width: 100%;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background-color: white;
+        transition: 0.5s;
+      }
+
+      #options-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 70%;
+      }
+
+      .options {
+        border: solid 1px black;
+        width: 350px;
+        height: 300px;
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 40px;
+        text-align: center;
+      }
+
+      .options h2 {
+        font-size: 34px;
+        margin: 0;
+      }
+
+      .options p {
+        font-size: 25px;
+      }
+
+
+      .options:hover {
+        cursor: pointer;
+        background-color: #fafafa;
+      }
+
+      #message-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 5%;
+        bottom: 5%;
+        color: white;
+        -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+      }
+
+      #message-container h1 {
+        font-family: "Bodoni 72 Smallcaps";
+        font-weight: lighter;
+        font-size: 50px;
+      }
+
+      #message-container #message-body {
+        font-family: "Apple Chancery";
+        font-size: 35px;
+        width: 70%;
+        text-align: center;
+        letter-spacing: 2px;
+        line-height: 60px;
+      }
+
+      #message-container #date {
+        font-size: 30px;
+      }
+
+      #options-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        transition: 0.3s;
+      }
+
+      #options-bar i {
+        font-size: 30px;
+        margin-right: 15px;
+        color: white;
+        transition: 0.4s;
+      }
+
+      #options-bar button {
+        background-color: transparent;
+        border: none;
+      }
+
+      #options-bar:hover {
+        background-color: white !important;
+      }
+
+      #options-bar:hover i {
+        color: black !important;
+      }
+
+      #options-bar i:hover {
+        transform: rotate(360deg);
+        cursor: pointer;
+      }
+    </style>
+
+    <style media="screen">
+      @keyframes heartbeat
+      {
+        0%
+        {
+          transform: scale( .75 );
+        }
+        20%
+        {
+          transform: scale( 1 );
+        }
+        40%
+        {
+          transform: scale( .75 );
+        }
+        60%
+        {
+          transform: scale( 1 );
+        }
+        80%
+        {
+          transform: scale( .75 );
+        }
+        100%
+        {
+          transform: scale( .75 );
+        }
+      }
+
+      #heart-loader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        display: flex;
+        flex-direction: : column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(130, 124, 124, 0.49);
+      }
+
+      #heart-loader i {
+        display: inline-block;
+        font-size: 100px;
+        color: red;
+        animation: heartbeat 1s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="heart-loader">
+      <i class="fas fa-heart"></i>
+    </div>
+    <div id="container">
+      <div id="options-container">
+        <div id="options-div">
+
+          <div id="existing-connections" class="options">
+            <h2>Switch to another connection</h2>
+            <p>There may be many loved ones waiting to be with you. See what they have for you!</p>
+          </div>
+          <div id="create-connection" class="options">
+            <h2>Create a new connection</h2>
+            <p>Send your loved one messages, notes, and more by creating your own digital connection.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="options-bar">
+        <i class="fas fa-bars" onclick="toggleOptions()"></i>
+      </div>
+
+      <div id="message-container">
+        <h1></h1>
+        <p id="message-body"></p>
+        <p id="date"></p>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      function toggleOptions() {
+        var icon = document.querySelector("#options-bar i");
+        if (icon.className.includes('fa-bars')) {
+          // closed state, need to open
+          openOptions();
+        } else if (icon.className.includes('fa-times')) {
+          // open state, need to close
+          closeOptions();
+        }
+      }
+
+      function openOptions() {
+        document.getElementById("options-bar").style.backgroundColor = "white";
+        document.getElementById("options-container").style.height = "100%";
+
+        var icon = document.querySelector("#options-bar i");
+        icon.style.color = "black";
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      }
+
+      /* Close when someone clicks on the "x" symbol inside the overlay */
+      function closeOptions() {
+        document.getElementById("options-container").style.height = "0%";
+        document.getElementById("options-bar").style.backgroundColor = "transparent";
+
+        var icon = document.querySelector("#options-bar i");
+        icon.style.color = "white";
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    </script>
+
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-database.js"></script>
+
+    <script type="text/javascript">
+      var config = {
+        apiKey: "AIzaSyAdKihBR54Sk7zNrvoZ6yjnK8ABNvqWIgg",
+        authDomain: "lovebug-72c5b.firebaseapp.com",
+        databaseURL: "https://lovebug-72c5b-default-rtdb.firebaseio.com",
+        projectId: "lovebug-72c5b",
+        storageBucket: "lovebug-72c5b.appspot.com",
+        messagingSenderId: "145881971551",
+        appId: "1:145881971551:web:26bbcea3e3d3c2041294ea",
+        measurementId: "G-1MC9LFT4RY"
+     };
+
+     firebase.initializeApp(config);
+    </script>
+
+    <script type="text/javascript">
+      var db = firebase.database();
+
+      var loader = document.getElementById("heart-loader");
+      loader.style.display = "flex";
+
+      var messages_ref = db.ref('0906').child('data').child('messages');
+
+      messages_ref.once('value', function(snapshot) {
+        var val = snapshot.val();
+        // Get current date
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+        var today = (date < 10 ? '0' + date.toString() : date.toString()) + (month < 10 ? '0' + month.toString() : month.toString()) + year.toString() // ddmmyyyy
+        // Display date protocol
+        const monthRegister = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var dateStr = `${monthRegister[month - 1]} ${date}, ${year}`;
+
+        var displayMessageObj = {};
+
+        for (var message_obj of val) {
+          if (message_obj.seen_on == today) {
+            displayMessageObj = message_obj;
+            break;
+          } else if (message_obj.seen_on == null) {
+            displayMessageObj = message_obj;
+            messages_ref.child(val.indexOf(message_obj)).child('seen_on').set(today);
+            break;
+          }
+        }
+
+        document.querySelector('#message-container h1').innerHTML = displayMessageObj.theme;
+        document.getElementById('message-body').innerHTML = displayMessageObj.text;
+
+        document.getElementById("date").innerHTML = dateStr;
+        loader.style.display = "none";
+        console.log(val);
+      });
+    </script>
+  </body>
+</html>
