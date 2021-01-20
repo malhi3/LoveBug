@@ -4,9 +4,88 @@
     <meta charset="utf-8">
     <title></title>
   </head>
+  <style media="screen">
+    #login-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 200px;
+      font-size: 16px;
+      padding: 10px 0px;
+      background-color: white;
+      border: 1px solid #999999;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    #login-btn:hover {
+      cursor: pointer;
+      background-color: #f5f5f5;
+    }
+
+    #login-btn:focus {
+      outline: none;
+    }
+  </style>
   <body>
     <h1>Lovebug</h1>
     <h2>Your bridge for love</h2>
-    <a href="login.html">Let's go!</a>
+    <button type="button" id="login-btn" onclick="signInWithGoogle();" value=""><img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+Sign In With Google</button>
   </body>
+
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+
+  <script type="text/javascript">
+    var config = {
+      apiKey: "AIzaSyAdKihBR54Sk7zNrvoZ6yjnK8ABNvqWIgg",
+      authDomain: "lovebug-72c5b.firebaseapp.com",
+      databaseURL: "https://lovebug-72c5b-default-rtdb.firebaseio.com",
+      projectId: "lovebug-72c5b",
+      storageBucket: "lovebug-72c5b.appspot.com",
+      messagingSenderId: "145881971551",
+      appId: "1:145881971551:web:26bbcea3e3d3c2041294ea",
+      measurementId: "G-1MC9LFT4RY"
+   };
+
+   firebase.initializeApp(config);
+  </script>
+
+  <script type="text/javascript">
+  function signInWithGoogle() {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    console.log(provider);
+
+    firebase.auth().signInWithPopup(provider).then((result) => {
+        var credential = result.credential;
+
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+
+        // go to user dashboard page
+        window.location = "dashboard.html"
+      }).catch((error) => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorMessage);
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+  }
+  </script>
 </html>
